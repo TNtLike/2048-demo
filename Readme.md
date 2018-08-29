@@ -1,3 +1,5 @@
-# 2048 by Cocos Creator
+# 2048 by Cocos Creator 1.93
 
-![img](./arts/61B9DA5E-3E13-4958-9FF1-2A75D41313E9.png)
+![img](./arts/1.png)
+![img](./arts/2.png)
+![img](./arts/3.png)
