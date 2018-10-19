@@ -18,8 +18,18 @@ cc.Class({
 
     },
     ctor() {
-        this.blocks = Array;
-        this.data = Array;
+        this.blocks = [
+            [null, null, null, null],
+            [null, null, null, null],
+            [null, null, null, null],
+            [null, null, null, null]
+        ];
+        this.data = [
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0]
+        ];
         this.positions = Array;
         this.touchStartTime = 0;
         this.touchEndTime = 0;
@@ -29,24 +39,7 @@ cc.Class({
         this.blockSize = 0;
         this.moving = false;
     },
-
-    // use this for initialization
     onLoad: function () {
-        //初始化数组
-        this.data = [
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0]
-        ];
-        this.blocks = [
-            [null, null, null, null],
-            [null, null, null, null],
-            [null, null, null, null],
-            [null, null, null, null]
-        ];
-
-
         //设置边距
         var betweenWidth = 20;
         var size = (cc.winSize.width - betweenWidth * 5) / 4;
