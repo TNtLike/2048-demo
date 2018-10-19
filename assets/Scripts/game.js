@@ -1,13 +1,3 @@
-// Learn cc.Class:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/class.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/class.html
-// Learn Attribute:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-
 cc.Class({
     extends: cc.Component,
 
@@ -24,16 +14,20 @@ cc.Class({
             default: null,
             type: cc.Label,
         },
-        blocks: Array,
-        data: Array,
-        positions: Array,
-        touchStartTime:0,
-        touchEndTime:0,
-        touchStartPoint:0,
-        touchEndPoint:0,
-        currentScore: 0,
-        blockSize: 0,
-        moving: false
+
+
+    },
+    ctor() {
+        this.blocks = Array;
+        this.data = Array;
+        this.positions = Array;
+        this.touchStartTime = 0;
+        this.touchEndTime = 0;
+        this.touchStartPoint = 0;
+        this.touchEndPoint = 0;
+        this.currentScore = 0;
+        this.blockSize = 0;
+        this.moving = false;
     },
 
     // use this for initialization
@@ -56,7 +50,7 @@ cc.Class({
         //设置边距
         var betweenWidth = 20;
         var size = (cc.winSize.width - betweenWidth * 5) / 4;
-        this.blockSize=size;
+        this.blockSize = size;
         var x = betweenWidth + size / 2;
         var y = size;
         // 存储16个block的坐标点位置
@@ -80,57 +74,7 @@ cc.Class({
             x = betweenWidth + size / 2;
 
         }
-        //添加监听事件
-        var self = this;
-        this.node.on('touchstart', function (event) {
 
-            cc.log("touch--start");
-            this.touchStartTime = Date.now();
-            this.touchStartPoint = event.getLocation();
-            return true;
-        });
-
-        this.node.on('touchmove', function (event) {
-            cc.log("touch--moved");
-        });
-
-        this.node.on('touchend', function (event) {
-            this.touchEndTime = Date.now();
-            this.touchEndPoint = event.getLocation();
-            var dis = cc.p(this.touchEndPoint.x - this.touchStartPoint.x, this.touchEndPoint.y - this.touchStartPoint.y);
-            var time = this.touchEndTime - this.touchStartTime;
-            /// 少于200ms才判断上下左右滑动
-            if (time < 400) {
-                if (this.moving) {
-                    return;
-                }
-               //大于50判定有效
-                var startMoveDis = 50;
-                 // x比y大，左右滑动
-                if (Math.abs(dis.x) > Math.abs(dis.y)) {
-                    if (dis.x > startMoveDis) {
-                        cc.log("右滑");
-                        self.moving = true;
-                        self.moveRight();
-                    } else if (dis.x < -startMoveDis) {
-                        cc.log("左滑");
-                        self.moving = true;
-                        self.moveLeft();
-                    }
-                } else { // 上下滑动
-                    if (dis.y > startMoveDis) {
-                        cc.log("上滑");
-                        self.moving = true;
-                        self.moveUp();
-                    } else if (dis.y < -startMoveDis) {
-                        cc.log("下滑");
-                        self.moving = true;
-                        self.moveDown();
-                    }
-                }
-            }
-
-        });
 
         this.setColor();
     },
@@ -149,6 +93,55 @@ cc.Class({
         this.addBlock();
         this.addBlock();
         this.addBlock();
+    },
+    onEnable() {
+        this.node.on(cc.Node.EventType.TOUCH_START, this.onTouchStart, this);
+        this.node.on(cc.Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
+        this.node.on(cc.Node.EventType.TOUCH_END, this.onTouchEnd, this);
+    },
+    onDisable() {
+        this.node.off(cc.Node.EventType.TOUCH_START, this.onTouchStart, this);
+        this.node.off(cc.Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
+        this.node.off(cc.Node.EventType.TOUCH_END, this.onTouchEnd, this);
+    },
+    onTouchStart: function (event) {
+        this.touchStartTime = Date.now();
+        this.touchStartPoint = event.getLocation();
+        return true;
+    },
+    onTouchMove: function (event) {
+        this.touchEndTime = Date.now();
+        var dis = event.getDelta();
+        var time = this.touchEndTime - this.touchStartTime;
+        /// 少于200ms才判断上下左右滑动
+        if (time < 400) {
+            if (this.moving) {
+                return;
+            }
+            //大于10判定有效
+            var startMoveDis = 10;
+            // x比y大，左右滑动
+            if (Math.abs(dis.x) > Math.abs(dis.y)) {
+                if (dis.x > startMoveDis) {
+                    this.moving = true;
+                    this.moveRight();
+                } else if (dis.x < -startMoveDis) {
+                    this.moving = true;
+                    this.moveLeft();
+                }
+            } else { // 上下滑动
+                if (dis.y > startMoveDis) {
+                    this.moving = true;
+                    this.moveUp();
+                } else if (dis.y < -startMoveDis) {
+                    this.moving = true;
+                    this.moveDown();
+                }
+            }
+        }
+    },
+    onTouchEnd: function (event) {
+
     },
 
 
@@ -642,6 +635,4 @@ cc.Class({
     updateSocreLabel: function () {
         this.currentScoreLabel.getComponent(cc.Label).string = "Score: " + this.currentScore;
     }
-
-
 });
