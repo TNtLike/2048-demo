@@ -33,8 +33,6 @@ cc.Class({
         this.positions = Array;
         this.touchStartTime = 0;
         this.touchEndTime = 0;
-        this.touchStartPoint = 0;
-        this.touchEndPoint = 0;
         this.currentScore = 0;
         this.blockSize = 0;
         this.moving = false;
@@ -67,8 +65,6 @@ cc.Class({
             x = betweenWidth + size / 2;
 
         }
-
-
         this.setColor();
     },
 
@@ -82,7 +78,6 @@ cc.Class({
                 }
             }
         }
-        cc.log(this.data);
         this.addBlock();
         this.addBlock();
         this.addBlock();
@@ -241,8 +236,6 @@ cc.Class({
     mergeAction: function (b1, b2, num, callback) {
         var self = this;
         b1.destroy(); // 合并后销毁
-        var scale1 = cc.scaleTo(0.1, 1.1);
-        var scale2 = cc.scaleTo(0.1, 1);
         var mid = cc.callFunc(function () {
             b2.setColor(self.colors[num]);
             b2.getChildByName('label').getComponent(cc.Label).string = num;
@@ -250,8 +243,24 @@ cc.Class({
         var finished = cc.callFunc(function () {
             callback();
         });
+        var m = cc.sequence(
+            cc.scaleTo(0.1, 1.1),
+            mid,
+            cc.scaleTo(0.1, 1),
+            finished,
+
+        );
         //顺序执行操作
-        b2.runAction(cc.sequence(scale1, mid, scale2, finished));
+        b2.runAction(m);
+    },
+
+    merged: () => {
+        var merged = [];
+        for (var i = 0; i < 4; i++) {
+            merged.push([0, 0, 0, 0]);
+        }
+        return merged;
+
     },
 
 
@@ -262,10 +271,7 @@ cc.Class({
         var self = this;
         // 递归移动操作
         var isMoved = false;
-        var merged = [];
-        for (var i = 0; i < 4; i++) {
-            merged.push([0, 0, 0, 0]);
-        }
+        var merged = this.merged();
         var move = function (x, y, callback) {
             if (y == 0) {
                 if (callback) {
@@ -342,10 +348,7 @@ cc.Class({
         var self = this;
         // 递归移动操作
         var isMoved = false;
-        var merged = [];
-        for (var i = 0; i < 4; i++) {
-            merged.push([0, 0, 0, 0]);
-        }
+        var merged = this.merged();
         var move = function (x, y, callback) {
             if (y == 3) {
                 if (callback) {
@@ -420,10 +423,7 @@ cc.Class({
         var self = this;
         // 递归移动操作
         var isMoved = false;
-        var merged = [];
-        for (var i = 0; i < 4; i++) {
-            merged.push([0, 0, 0, 0]);
-        }
+        var merged = this.merged();
         var move = function (x, y, callback) {
             if (x == 3) {
                 if (callback) {
@@ -498,10 +498,7 @@ cc.Class({
         var self = this;
         // 递归移动操作
         var isMoved = true;
-        var merged = [];
-        for (var i = 0; i < 4; i++) {
-            merged.push([0, 0, 0, 0]);
-        }
+        var merged = this.merged();
         var move = function (x, y, callback) {
             if (x == 0) {
                 if (callback) {
