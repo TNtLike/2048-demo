@@ -65,7 +65,7 @@ cc.Class({
             x = betweenWidth + size / 2;
 
         }
-        this.setColor();
+        this.colors = this.setColor();
     },
 
     start: function () {
@@ -149,19 +149,20 @@ cc.Class({
 
 
     // 颜色数据
-    setColor: function () {
-        this.colors = [];
-        this.colors[2] = cc.color(237, 241, 21, 255);
-        this.colors[4] = cc.color(255, 87, 34, 255);
-        this.colors[8] = cc.color(171, 241, 21, 255);
-        this.colors[16] = cc.color(194, 56, 181, 255);
-        this.colors[32] = cc.color(187, 149, 216, 255);
-        this.colors[64] = cc.color(216, 149, 209, 255);
-        this.colors[128] = cc.color(0, 153, 4, 255);
-        this.colors[256] = cc.color(16, 74, 99, 255);
-        this.colors[512] = cc.color(299, 0, 79, 255);
-        this.colors[1024] = cc.color(214, 215, 98, 255);
-        this.colors[2048] = cc.color(219, 0, 139, 255);
+    setColor: () => {
+        var colors = [];
+        colors[2] = cc.color(237, 241, 21, 255);
+        colors[4] = cc.color(255, 87, 34, 255);
+        colors[8] = cc.color(171, 241, 21, 255);
+        colors[16] = cc.color(194, 56, 181, 255);
+        colors[32] = cc.color(187, 149, 216, 255);
+        colors[64] = cc.color(216, 149, 209, 255);
+        colors[128] = cc.color(0, 153, 4, 255);
+        colors[256] = cc.color(16, 74, 99, 255);
+        colors[512] = cc.color(299, 0, 79, 255);
+        colors[1024] = cc.color(214, 215, 98, 255);
+        colors[2048] = cc.color(219, 0, 139, 255);
+        return colors;
 
     },
 
@@ -219,14 +220,15 @@ cc.Class({
      * 移动操作
      */
     moveAction: function (block, pos, callback) {
-        //移动坐标
-        var m = cc.moveTo(0.08, pos);
         //执行回调函数
-        var finished = cc.callFunc(function () {
-            callback();
-        });
         //顺序执行操作
-        block.runAction(cc.sequence(m, finished));
+        var m = cc.sequence(
+            cc.moveTo(0.08, pos),
+            cc.callFunc(function () {
+                callback();
+            })
+        );
+        block.runAction(m);
     },
 
 
