@@ -107,7 +107,7 @@ cc.Class({
                 return;
             }
             //大于10判定有效
-            var startMoveDis = 10;
+            var startMoveDis = 15;
             // x比y大，左右滑动
             if (Math.abs(dis.x) > Math.abs(dis.y)) {
                 if (dis.x > startMoveDis) {
@@ -211,10 +211,6 @@ cc.Class({
 
         return true;
     },
-
-
-
-
 
     /**
      * 移动操作
