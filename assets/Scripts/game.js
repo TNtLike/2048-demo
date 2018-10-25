@@ -274,6 +274,9 @@ cc.Class({
         b2.runAction(m);
     },
 
+    /**
+     * 清空矩阵
+     */
     merged: () => {
         var merged = [];
         for (var i = 0; i < 4; i++) {
