@@ -94,12 +94,12 @@ cc.Class({
     },
     onEnable() {
         this.node.on(cc.Node.EventType.TOUCH_START, this.onTouchStart, this);
-        // this.node.on(cc.Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
+        this.node.on(cc.Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
         this.node.on(cc.Node.EventType.TOUCH_END, this.onTouchEnd, this);
     },
     onDisable() {
         this.node.off(cc.Node.EventType.TOUCH_START, this.onTouchStart, this);
-        // this.node.off(cc.Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
+        this.node.off(cc.Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
         this.node.off(cc.Node.EventType.TOUCH_END, this.onTouchEnd, this);
     },
     onTouchStart: function (event) {
@@ -109,19 +109,21 @@ cc.Class({
         event.stopPropagation();
         return true;
     },
-    // onTouchMove: function (event) {},
+    onTouchMove: function (event) {
+        event.stopPropagation();
+    },
     onTouchEnd: function (event) {
         this.touchEndTime = Date.now();
         this.touchEndPoint = event.getLocation();
         var dis = cc.p(this.touchEndPoint.x - this.touchStartPoint.x, this.touchEndPoint.y - this.touchStartPoint.y);
         var time = this.touchEndTime - this.touchStartTime;
-        /// 大于200ms才判断滑动
-        if (time < 200) {
+        /// 大于400ms才判断滑动
+        if (time < 400) {
             if (this.moving) {
                 return;
             }
-            //大于50判定有效
-            var startMoveDis = 30;
+            //大于20判定有效
+            var startMoveDis = 20;
             // x比y大，左右滑动
             if (Math.abs(dis.x) > Math.abs(dis.y)) {
                 if (dis.x > startMoveDis) {
@@ -141,9 +143,7 @@ cc.Class({
                 }
             }
         }
-
         event.stopPropagation();
-
     },
 
 
@@ -180,22 +180,30 @@ cc.Class({
 
     },
 
-    getEmptyLocations: function () {
+    /**
+     * 扫描n阶矩阵
+     * @param {number}n 
+     * @param {Array}Array n阶矩阵
+     */
+    getEmptyLocations: (Array, n) => {
         // 空闲的位置
         var emptyLocations = [];
-        for (var i = 0; i < 4; i++) {
-            for (var j = 0; j < 4; j++) {
-                if (this.blocks[i][j] == null) {
-                    emptyLocations.push(i * 4 + j);
+        for (var i = 0; i < n; i++) {
+            for (var j = 0; j < n; j++) {
+                if (Array[i][j] == null) {
+                    emptyLocations.push(i * n + j);
                 }
             }
         }
         return emptyLocations;
     },
 
+    /**
+     * 新增block
+     */
     addBlock: function () {
         // 查找空位
-        var emptyLocations = this.getEmptyLocations();
+        var emptyLocations = this.getEmptyLocations(this.blocks, 4);
         cc.log(emptyLocations);
         //无空位
         if (emptyLocations.length == 0) {
