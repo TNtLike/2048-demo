@@ -105,6 +105,8 @@ cc.Class({
     onTouchStart: function (event) {
         this.touchStartTime = Date.now();
         this.touchStartPoint = event.getLocation();
+
+        event.stopPropagation();
         return true;
     },
     // onTouchMove: function (event) {},
@@ -113,13 +115,13 @@ cc.Class({
         this.touchEndPoint = event.getLocation();
         var dis = cc.p(this.touchEndPoint.x - this.touchStartPoint.x, this.touchEndPoint.y - this.touchStartPoint.y);
         var time = this.touchEndTime - this.touchStartTime;
-        /// 少于200ms才判断上下左右滑动
-        if (time < 400) {
+        /// 大于200ms才判断滑动
+        if (time < 200) {
             if (this.moving) {
                 return;
             }
             //大于50判定有效
-            var startMoveDis = 50;
+            var startMoveDis = 30;
             // x比y大，左右滑动
             if (Math.abs(dis.x) > Math.abs(dis.y)) {
                 if (dis.x > startMoveDis) {
@@ -139,6 +141,8 @@ cc.Class({
                 }
             }
         }
+
+        event.stopPropagation();
 
     },
 
