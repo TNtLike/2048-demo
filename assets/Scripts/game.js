@@ -1,3 +1,13 @@
+// Learn cc.Class:
+//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/class.html
+//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/class.html
+// Learn Attribute:
+//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
+//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/reference/attributes.html
+// Learn life-cycle callbacks:
+//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
+//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
+
 cc.Class({
     extends: cc.Component,
 
@@ -84,12 +94,12 @@ cc.Class({
     },
     onEnable() {
         this.node.on(cc.Node.EventType.TOUCH_START, this.onTouchStart, this);
-        this.node.on(cc.Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
+        // this.node.on(cc.Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
         this.node.on(cc.Node.EventType.TOUCH_END, this.onTouchEnd, this);
     },
     onDisable() {
         this.node.off(cc.Node.EventType.TOUCH_START, this.onTouchStart, this);
-        this.node.off(cc.Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
+        // this.node.off(cc.Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
         this.node.off(cc.Node.EventType.TOUCH_END, this.onTouchEnd, this);
     },
     onTouchStart: function (event) {
@@ -97,17 +107,19 @@ cc.Class({
         this.touchStartPoint = event.getLocation();
         return true;
     },
-    onTouchMove: function (event) {
+    // onTouchMove: function (event) {},
+    onTouchEnd: function (event) {
         this.touchEndTime = Date.now();
-        var dis = event.getDelta();
+        this.touchEndPoint = event.getLocation();
+        var dis = cc.p(this.touchEndPoint.x - this.touchStartPoint.x, this.touchEndPoint.y - this.touchStartPoint.y);
         var time = this.touchEndTime - this.touchStartTime;
         /// 少于200ms才判断上下左右滑动
         if (time < 400) {
             if (this.moving) {
                 return;
             }
-            //大于10判定有效
-            var startMoveDis = 15;
+            //大于50判定有效
+            var startMoveDis = 50;
             // x比y大，左右滑动
             if (Math.abs(dis.x) > Math.abs(dis.y)) {
                 if (dis.x > startMoveDis) {
@@ -127,8 +139,6 @@ cc.Class({
                 }
             }
         }
-    },
-    onTouchEnd: function (event) {
 
     },
 
@@ -623,4 +633,6 @@ cc.Class({
     updateSocreLabel: function () {
         this.currentScoreLabel.getComponent(cc.Label).string = "Score: " + this.currentScore;
     }
+
+
 });
