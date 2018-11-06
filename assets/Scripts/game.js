@@ -41,6 +41,7 @@ cc.Class({
             [0, 0, 0, 0]
         ];
         this.positions = Array;
+        this.colors = Array;
         this.touchStartTime = 0;
         this.touchEndTime = 0;
         this.currentScore = 0;
