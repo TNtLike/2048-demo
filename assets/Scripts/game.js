@@ -67,7 +67,7 @@ cc.Class({
                     width: size,
                     height: size
                 });
-                this.positions[i].push(cc.p(x, y));
+                this.positions[i].push(cc.v2(x, y));
                 x += (size + betweenWidth);
                 this.bg.node.addChild(b);
             }
@@ -115,7 +115,7 @@ cc.Class({
     onTouchEnd: function (event) {
         this.touchEndTime = Date.now();
         this.touchEndPoint = event.getLocation();
-        var dis = cc.p(this.touchEndPoint.x - this.touchStartPoint.x, this.touchEndPoint.y - this.touchStartPoint.y);
+        var dis = cc.v2(this.touchEndPoint.x - this.touchStartPoint.x, this.touchEndPoint.y - this.touchStartPoint.y);
         var time = this.touchEndTime - this.touchStartTime;
         /// 大于400ms才判断滑动
         if (time < 400) {
@@ -220,7 +220,8 @@ cc.Class({
             width: this.blockSize,
             height: this.blockSize,
         });
-        b.setColor(this.colors[numbers[n]]);
+        // b.Color(this.colors[numbers[n]]);
+        b.color = this.colors[numbers[n]];
         b.setPosition(this.positions[x][y]);
         b.getChildByName('label').getComponent(cc.Label).string = numbers[n];
         this.bg.node.addChild(b);
@@ -257,7 +258,8 @@ cc.Class({
         var self = this;
         b1.destroy(); // 合并后销毁
         var mid = cc.callFunc(function () {
-            b2.setColor(self.colors[num]);
+            b2.color = self.colors[num];
+            // b2.setColor(self.colors[num]);
             b2.getChildByName('label').getComponent(cc.Label).string = num;
         });
         var finished = cc.callFunc(function () {
