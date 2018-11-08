@@ -53,8 +53,8 @@ cc.Class({
         var betweenWidth = 20;
         var size = (cc.winSize.width - betweenWidth * 5) / 4;
         this.blockSize = size;
-        var x = betweenWidth + size / 2;
-        var y = size;
+        var x = betweenWidth + size / 2 - 360;
+        var y = size - 620;
         // 存储16个block的坐标点位置
         this.positions = [];
         for (var i = 0; i < 4; i++) {
@@ -73,7 +73,7 @@ cc.Class({
                 this.bg.node.addChild(b);
             }
             y += (size + betweenWidth);
-            x = betweenWidth + size / 2;
+            x = betweenWidth + size / 2 - 360;
 
         }
         this.colors = this.setColor();
