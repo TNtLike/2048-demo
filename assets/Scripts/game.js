@@ -70,7 +70,7 @@ cc.Class({
                 });
                 this.positions[i].push(cc.v2(x, y));
                 x += (size + betweenWidth);
-                this.bg.node.addChild(b);
+                // this.bg.node.addChild(b);
             }
             y += (size + betweenWidth);
             x = betweenWidth + size / 2 - 360;
