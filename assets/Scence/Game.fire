@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.27419354838709675,
-      "y": 0.27419354838709675,
+      "x": 0.14095108913833168,
+      "y": 0.14095108913833168,
       "z": 1
     },
     "_quat": {
@@ -289,7 +289,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "e6d8bf33-9d6e-4190-a51b-e6809388af3b"
+      "__uuid__": "316edf37-8dc1-4ebf-9b07-0972fd2c6974"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -335,7 +335,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 155.72,
+      "width": 153.72,
       "height": 100
     },
     "_anchorPoint": {
@@ -386,8 +386,10 @@
     "_fontSize": 70,
     "_lineHeight": 100,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "f29a6635-8159-4c13-9e90-b3cae2d8ef01"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
@@ -451,8 +453,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 148.96,
-      "height": 40
+      "width": 147.05,
+      "height": 50
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -461,7 +463,7 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": 9.999999999999986,
+      "x": 2.842170943040401e-14,
       "y": 310,
       "z": 0
     },
@@ -499,11 +501,13 @@
     "_useOriginalSize": false,
     "_string": "Score: 0",
     "_N$string": "Score: 0",
-    "_fontSize": 40,
-    "_lineHeight": 40,
+    "_fontSize": 50,
+    "_lineHeight": 50,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "f29a6635-8159-4c13-9e90-b3cae2d8ef01"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
@@ -522,9 +526,9 @@
     "alignMode": 2,
     "_target": null,
     "_alignFlags": 9,
-    "_left": 295.52,
+    "_left": 286.475,
     "_right": 0,
-    "_top": 290,
+    "_top": 285,
     "_bottom": 0,
     "_verticalCenter": 0,
     "_horizontalCenter": 0,
