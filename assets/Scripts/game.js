@@ -77,6 +77,7 @@ cc.Class({
 
         }
         this.colors = this.setColor();
+        cc.log(this.node);
     },
 
     start: function () {

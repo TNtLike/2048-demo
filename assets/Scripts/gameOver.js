@@ -22,7 +22,7 @@ cc.Class({
     },
 
     restartGame: function () {
-        cc.director.loadScene("Game");
+        cc.director.loadScene("Start");
 
     },
 
